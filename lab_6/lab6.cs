@@ -53,11 +53,11 @@ namespace InterfacesAndAbstractClasses
         public abstract int NumberOfSides { get; }
         public abstract double CalculateArea();
         public abstract void CalculateSides();
-        
+
         /// <summary>
-        /// Установлює координати вершин фігури.
+        /// Sets the coordinates of the figure's vertices.
         /// </summary>
-        /// <param name="vertices">Масив координат вершин</param>
+        /// <param name="vertices">Array of vertex coordinates</param>
         public abstract void SetVertices(int[,] vertices);
         public abstract void ShowData();
     }
