@@ -8,139 +8,74 @@ namespace Matrix
         {
             int rows, columns;
 
-            Console.Write("Enter the number matrix rows: ");
+            Console.Write("Введіть кількість рядків матриці: ");
             rows = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Enter the number matrix columns: ");
+            Console.Write("Введіть кількість стовпців матриці: ");
             columns = Convert.ToInt32(Console.ReadLine());
 
             Matrix mtrx = new Matrix(rows, columns);
 
             mtrx.FillMatrix();
             mtrx.ShowMatrix();
-            int diag_sum = mtrx.CaclDiagonalSum();
+            int diag_sum = mtrx.CalculateDiagonalSum();
 
-            Console.WriteLine($"Sum of diagonal elements: {diag_sum}");
+            Console.WriteLine($"Сума діагональних елементів: {diag_sum}");
         }
     }
 }
+
 using System;
 
 namespace Matrix
 {
     class Matrix
     {
-        private int rows;
-        private int columns;
-        private int[,] matrix;
-        public Matrix(int row, int column)
+        private int Rows { get; }
+        private int Columns { get; }
+        private int[,] MatrixArray { get; }
+
+        public Matrix(int rows, int columns)
         {
-            this.rows = row;
-            this.columns = column;
-            matrix = new int[row, column];
-        }
-        public Matrix()
-        {
-            this.rows = 0;
-            this.columns = 0;
-            matrix = null;
+            Rows = rows;
+            Columns = columns;
+            MatrixArray = new int[rows, columns];
         }
 
         public void FillMatrix()
         {
             Random rand = new Random();
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; j < Columns; j++)
                 {
-                    matrix[i, j] = rand.Next(-20, 21);
+                    MatrixArray[i, j] = rand.Next(-20, 21);
                 }
             }
-
         }
-        public int CaclDiagonalSum()
+
+        public int CalculateDiagonalSum()
         {
             int sum = 0;
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; j < Columns; j++)
                 {
-                    if (i == j) sum += matrix[i, j];
+                    if (i == j) sum += MatrixArray[i, j];
                 }
             }
             return sum;
         }
+
         public void ShowMatrix()
         {
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; j < Columns; j++)
                 {
-                    Console.Write($"{matrix[i, j], -10}");
+                    Console.Write($"{MatrixArray[i, j], -10}");
                 }
                 Console.WriteLine();
             }
         }
-
     }
 }
-using System;
-
-namespace Matrix
-{
-    class Matrix
-    {
-        private int rows;
-        private int columns;
-        private int[,] matrix;
-        public Matrix(int row, int column)
-        {
-            this.rows = row;
-            this.columns = column;
-            matrix = new int[row, column];
-        }
-        public Matrix()
-        {
-            this.rows = 0;
-            this.columns = 0;
-            matrix = null;
-        }
-
-        public void FillMatrix()
-        {
-            Random rand = new Random();
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    matrix[i, j] = rand.Next(-20, 21);
-                }
-            }
-
-        }
-        public int CaclDiagonalSum()
-        {
-            int sum = 0;
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    if (i == j) sum += matrix[i, j];
-                }
-            }
-            return sum;
-        }
-        public void ShowMatrix()
-        {
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    Console.Write($"{matrix[i, j], -10}");
-                }
-                Console.WriteLine();
-            }
-        }
-
-    }
-}
-
