@@ -6,39 +6,66 @@ namespace InterfacesAndAbstractClasses
     {
         static void Main(string[] args)
         {
-            Quadrangle quad = new Quadrangle();
-            var verticesQuad = new double[quad.NumberOfSides, 2];
-            var nameOfVerticesQuad = new string[] { "A", "B", "C", "D" };
+            var quad = CreateQuadrangle();
+            DisplayFigureData(quad);
 
-            for (int i = 0; i < quad.NumberOfSides; i++)
-            {
-                Console.Write($"Vertex {nameOfVerticesQuad[i]}: x = ");
-                verticesQuad[i, 0] = double.Parse(Console.ReadLine());
-                Console.Write($"Vertex {nameOfVerticesQuad[i]}: y = ");
-                verticesQuad[i, 1] = double.Parse(Console.ReadLine());
-            }
+            var triangle = CreateTriangle();
+            DisplayFigureData(triangle);
+        }
+
+        static Quadrangle CreateQuadrangle()
+        {
+            var quad = new Quadrangle();
+            var verticesQuad = GetVertices(quad.NumberOfSides, new string[] { "A", "B", "C", "D" });
 
             quad.SetVertices(verticesQuad);
             quad.CalculateSides();
             quad.CalculateArea();
-            quad.ShowData();
 
-            Triangle trian = new Triangle();
-            var verticesTriangle = new double[trian.NumberOfSides, 2];
-            var nameOfVerticesTriangle = new string[] { "A", "B", "C" };
+            return quad;
+        }
 
-            for (int i = 0; i < trian.NumberOfSides; i++)
+        static Triangle CreateTriangle()
+        {
+            var triangle = new Triangle();
+            var verticesTriangle = GetVertices(triangle.NumberOfSides, new string[] { "A", "B", "C" });
+
+            triangle.SetVertices(verticesTriangle);
+            triangle.CalculateSides();
+            triangle.CalculateArea();
+
+            return triangle;
+        }
+
+        static double[,] GetVertices(int sides, string[] names)
+        {
+            var vertices = new double[sides, 2];
+            for (int i = 0; i < sides; i++)
             {
-                Console.Write($"Vertex {nameOfVerticesTriangle[i]}: x = ");
-                verticesTriangle[i, 0] = double.Parse(Console.ReadLine());
-                Console.Write($"Vertex {nameOfVerticesTriangle[i]}: y = ");
-                verticesTriangle[i, 1] = double.Parse(Console.ReadLine());
-            }
+                Console.Write($"Vertex {names[i]}: x = ");
+                if (!double.TryParse(Console.ReadLine(), out double x))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                    Environment.Exit(0);
+                }
 
-            trian.SetVertices(verticesTriangle);
-            trian.CalculateSides();
-            trian.CalculateArea();
-            trian.ShowData();
+                Console.Write($"Vertex {names[i]}: y = ");
+                if (!double.TryParse(Console.ReadLine(), out double y))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                    Environment.Exit(0);
+                }
+
+                vertices[i, 0] = x;
+                vertices[i, 1] = y;
+            }
+            return vertices;
+        }
+
+        static void DisplayFigureData(Figure figure)
+        {
+            Console.WriteLine("Figure Data:");
+            figure.ShowData();
         }
     }
 
@@ -54,25 +81,20 @@ namespace InterfacesAndAbstractClasses
 
     class Triangle : Figure
     {
-        private double[,] vertices;
-        private double[] lengthsOfSides;
-        private string[] namesOfSides = { "AB", "BC", "AC" };
-        private string[] namesOfVertices = { "A", "B", "C" };
+        private double[,] Vertices { get; set; }
+        private double[] LengthsOfSides { get; set; }
+        private string[] NamesOfSides = { "AB", "BC", "AC" };
+        private string[] NamesOfVertices = { "A", "B", "C" };
         public override int NumberOfSides { get { return 3; } }
 
         public override void SetVertices(double[,] vertices)
         {
-            this.vertices = new double[NumberOfSides, 2];
-            for (int i = 0; i < NumberOfSides; i++)
-            {
-                this.vertices[i, 0] = vertices[i, 0];
-                this.vertices[i, 1] = vertices[i, 1];
-            }
+            Vertices = vertices;
         }
 
         public override double CalculateArea()
         {
-            if (vertices == null || lengthsOfSides == null)
+            if (Vertices == null || LengthsOfSides == null)
             {
                 Console.WriteLine("Operation isn't available!");
                 return 0;
@@ -82,25 +104,25 @@ namespace InterfacesAndAbstractClasses
                 double perimeter = 0;
                 for (int i = 0; i < NumberOfSides; i++)
                 {
-                    perimeter += lengthsOfSides[i];
+                    perimeter += LengthsOfSides[i];
                 }
-                Area = Math.Sqrt((perimeter / 2) * (perimeter / 2 - lengthsOfSides[0]) * (perimeter / 2 - lengthsOfSides[1]) * (perimeter / 2 - lengthsOfSides[2]));
+                Area = Math.Sqrt((perimeter / 2) * (perimeter / 2 - LengthsOfSides[0]) * (perimeter / 2 - LengthsOfSides[1]) * (perimeter / 2 - LengthsOfSides[2]));
                 return Area;
             }
         }
 
         public override void CalculateSides()
         {
-            if (vertices == null)
+            if (Vertices == null)
             {
                 Console.WriteLine("The coordinates are not set!");
             }
             else
             {
-                lengthsOfSides = new double[NumberOfSides];
-                lengthsOfSides[0] = CalculateLength(vertices[0, 0], vertices[0, 1], vertices[1, 0], vertices[1, 1]);
-                lengthsOfSides[1] = CalculateLength(vertices[1, 0], vertices[1, 1], vertices[2, 0], vertices[2, 1]);
-                lengthsOfSides[2] = CalculateLength(vertices[2, 0], vertices[2, 1], vertices[0, 0], vertices[0, 1]);
+                LengthsOfSides = new double[NumberOfSides];
+                LengthsOfSides[0] = CalculateLength(Vertices[0, 0], Vertices[0, 1], Vertices[1, 0], Vertices[1, 1]);
+                LengthsOfSides[1] = CalculateLength(Vertices[1, 0], Vertices[1, 1], Vertices[2, 0], Vertices[2, 1]);
+                LengthsOfSides[2] = CalculateLength(Vertices[2, 0], Vertices[2, 1], Vertices[0, 0], Vertices[0, 1]);
             }
         }
 
@@ -111,7 +133,7 @@ namespace InterfacesAndAbstractClasses
 
         public override void ShowData()
         {
-            if (lengthsOfSides == null || vertices == null)
+            if (LengthsOfSides == null || Vertices == null)
             {
                 Console.WriteLine("Operation isn't available!");
             }
@@ -121,14 +143,14 @@ namespace InterfacesAndAbstractClasses
 
                 for (int i = 0; i < NumberOfSides; i++)
                 {
-                    Console.WriteLine($"{namesOfVertices[i]}: x = {vertices[i, 0]}, y = {vertices[i, 1]}");
+                    Console.WriteLine($"{NamesOfVertices[i]}: x = {Vertices[i, 0]}, y = {Vertices[i, 1]}");
                 }
 
                 Console.WriteLine("---------------------------------------------");
 
                 for (int i = 0; i < NumberOfSides; i++)
                 {
-                    Console.WriteLine($"{namesOfSides[i]}: {lengthsOfSides[i]}");
+                    Console.WriteLine($"{NamesOfSides[i]}: {LengthsOfSides[i]}");
                 }
 
                 Console.WriteLine("---------------------------------------------");
@@ -140,25 +162,20 @@ namespace InterfacesAndAbstractClasses
 
     class Quadrangle : Figure
     {
-        private double[,] vertices;
-        private double[] lengthsOfSides;
-        private string[] namesOfSides = { "AB", "BC", "CD", "AD" };
-        private string[] namesOfVertices = { "A", "B", "C", "D" };
+        private double[,] Vertices { get; set; }
+        private double[] LengthsOfSides { get; set; }
+        private string[] NamesOfSides = { "AB", "BC", "CD", "AD" };
+        private string[] NamesOfVertices = { "A", "B", "C", "D" };
         public override int NumberOfSides { get { return 4; } }
 
         public override void SetVertices(double[,] vertices)
         {
-            this.vertices = new double[NumberOfSides, 2];
-            for (int i = 0; i < NumberOfSides; i++)
-            {
-                this.vertices[i, 0] = vertices[i, 0];
-                this.vertices[i, 1] = vertices[i, 1];
-            }
+            Vertices = vertices;
         }
 
         public override void ShowData()
         {
-            if (lengthsOfSides == null || vertices == null)
+            if (LengthsOfSides == null || Vertices == null)
             {
                 Console.WriteLine("Operation isn't available!");
             }
@@ -168,14 +185,14 @@ namespace InterfacesAndAbstractClasses
 
                 for (int i = 0; i < NumberOfSides; i++)
                 {
-                    Console.WriteLine($"{namesOfVertices[i]}: x = {vertices[i, 0]}, y = {vertices[i, 1]}");
+                    Console.WriteLine($"{NamesOfVertices[i]}: x = {Vertices[i, 0]}, y = {Vertices[i, 1]}");
                 }
 
                 Console.WriteLine("---------------------------------------------");
 
                 for (int i = 0; i < NumberOfSides; i++)
                 {
-                    Console.WriteLine($"{namesOfSides[i]}: {lengthsOfSides[i]}");
+                    Console.WriteLine($"{NamesOfSides[i]}: {LengthsOfSides[i]}");
                 }
 
                 Console.WriteLine("---------------------------------------------");
@@ -186,30 +203,30 @@ namespace InterfacesAndAbstractClasses
 
         public override double CalculateArea()
         {
-            if (lengthsOfSides == null || vertices == null)
+            if (LengthsOfSides == null || Vertices == null)
             {
                 Console.WriteLine("Operation isn't available!");
                 return 0;
             }
 
-            Area = lengthsOfSides[0] * lengthsOfSides[1];
+            Area = LengthsOfSides[0] * LengthsOfSides[1];
             return Area;
         }
 
         public override void CalculateSides()
         {
-            if (vertices == null)
+            if (Vertices == null)
             {
                 Console.WriteLine("Vertices are not set!");
             }
             else
             {
-                lengthsOfSides = new double[NumberOfSides];
+                LengthsOfSides = new double[NumberOfSides];
 
-                lengthsOfSides[0] = CalculateLength(vertices[0, 0], vertices[0, 1], vertices[1, 0], vertices[1, 1]);
-                lengthsOfSides[1] = CalculateLength(vertices[1, 0], vertices[1, 1], vertices[2, 0], vertices[2, 1]);
-                lengthsOfSides[2] = CalculateLength(vertices[2, 0], vertices[2, 1], vertices[3, 0], vertices[3, 1]);
-                lengthsOfSides[3] = CalculateLength(vertices[3, 0], vertices[3, 1], vertices[0, 0], vertices[0, 1]);
+                LengthsOfSides[0] = CalculateLength(Vertices[0, 0], Vertices[0, 1], Vertices[1, 0], Vertices[1, 1]);
+                LengthsOfSides[1] = CalculateLength(Vertices[1, 0], Vertices[1, 1], Vertices[2, 0], Vertices[2, 1]);
+                LengthsOfSides[2] = CalculateLength(Vertices[2, 0], Vertices[2, 1], Vertices[3, 0], Vertices[3, 1]);
+                LengthsOfSides[3] = CalculateLength(Vertices[3, 0], Vertices[3, 1], Vertices[0, 0], Vertices[0, 1]);
             }
         }
 
