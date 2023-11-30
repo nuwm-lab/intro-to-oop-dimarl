@@ -13,13 +13,13 @@ namespace Matrix
             Console.Write("Введіть кількість стовпців матриці: ");
             columns = Convert.ToInt32(Console.ReadLine());
 
-            Matrix mtrx = new Matrix(rows, columns);
+            Matrix matrix = new Matrix(rows, columns);
 
-            mtrx.FillMatrix();
-            mtrx.DisplayMatrix();
-            int diag_sum = mtrx.GetDiagonalSum();
+            matrix.FillMatrix();
+            matrix.DisplayMatrix();
+            int diagonalSum = matrix.GetDiagonalSum();
 
-            Console.WriteLine($"Сума діагональних елементів: {diag_sum}");
+            Console.WriteLine($"Сума діагональних елементів: {diagonalSum}");
         }
     }
 }
@@ -30,25 +30,25 @@ namespace Matrix
 {
     class Matrix
     {
-        private int Rows { get; }
-        private int Columns { get; }
-        private int[,] MatrixArray { get; }
+        private int rows;
+        private int columns;
+        private int[,] matrixArray;
 
-        public Matrix(int Rows, int Rolumns)
+        public Matrix(int rows, int columns)
         {
-            Rows = Rows;
-            Columns = Columns;
-            MatrixArray = new int[Rows, Columns];
+            this.rows = rows;
+            this.columns = columns;
+            matrixArray = new int[rows, columns];
         }
 
         private void FillMatrix()
         {
             Random rand = new Random();
-            for (int i = 0; i < Rows; i++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < Columns; j++)
+                for (int j = 0; j < columns; j++)
                 {
-                    MatrixArray[i, j] = rand.Next(-20, 21);
+                    matrixArray[i, j] = rand.Next(-20, 21);
                 }
             }
         }
@@ -56,11 +56,11 @@ namespace Matrix
         private int CalculateDiagonalSum()
         {
             int sum = 0;
-            for (int i = 0; i < Rows; i++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < Columns; j++)
+                for (int j = 0; j < columns; j++)
                 {
-                    if (i == j) sum += MatrixArray[i, j];
+                    if (i == j) sum += matrixArray[i, j];
                 }
             }
             return sum;
@@ -68,17 +68,17 @@ namespace Matrix
 
         private void ShowMatrix()
         {
-            for (int i = 0; i < Rows; i++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < Columns; j++)
+                for (int j = 0; j < columns; j++)
                 {
-                    Console.Write($"{MatrixArray[i, j], -10}");
+                    Console.Write($"{matrixArray[i, j], -10}");
                 }
                 Console.WriteLine();
             }
         }
 
-        private int GetDiagonalSum()
+        public int GetDiagonalSum()
         {
             return CalculateDiagonalSum();
         }
@@ -86,6 +86,18 @@ namespace Matrix
         public void DisplayMatrix()
         {
             ShowMatrix();
+        }
+
+        public int Rows
+        {
+            get { return rows; }
+            set { rows = value; }
+        }
+
+        public int Columns
+        {
+            get { return columns; }
+            set { columns = value; }
         }
     }
 }
