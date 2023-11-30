@@ -16,8 +16,8 @@ namespace Matrix
             Matrix mtrx = new Matrix(rows, columns);
 
             mtrx.FillMatrix();
-            mtrx.ShowMatrix();
-            int diag_sum = mtrx.CalculateDiagonalSum();
+            mtrx.DisplayMatrix();
+            int diag_sum = mtrx.GetDiagonalSum();
 
             Console.WriteLine($"Сума діагональних елементів: {diag_sum}");
         }
@@ -41,7 +41,7 @@ namespace Matrix
             MatrixArray = new int[rows, columns];
         }
 
-        public void FillMatrix()
+        private void FillMatrix()
         {
             Random rand = new Random();
             for (int i = 0; i < Rows; i++)
@@ -53,7 +53,7 @@ namespace Matrix
             }
         }
 
-        public int CalculateDiagonalSum()
+        private int CalculateDiagonalSum()
         {
             int sum = 0;
             for (int i = 0; i < Rows; i++)
@@ -66,7 +66,7 @@ namespace Matrix
             return sum;
         }
 
-        public void ShowMatrix()
+        private void ShowMatrix()
         {
             for (int i = 0; i < Rows; i++)
             {
@@ -76,6 +76,16 @@ namespace Matrix
                 }
                 Console.WriteLine();
             }
+        }
+
+        public int GetDiagonalSum()
+        {
+            return CalculateDiagonalSum();
+        }
+
+        public void DisplayMatrix()
+        {
+            ShowMatrix();
         }
     }
 }
