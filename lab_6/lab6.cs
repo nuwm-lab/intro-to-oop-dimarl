@@ -1,10 +1,10 @@
 using System;
 
-namespace InterfaceAndAbsractClass
+namespace InterfacesAndAbstractClasses
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Quadrangle quad = new Quadrangle();
             int[,] verticesQuad = new int[quad.NumberOfSides, 2];
@@ -45,7 +45,7 @@ namespace InterfaceAndAbsractClass
 
 using System;
 
-namespace InterfaceAndAbsractClass
+namespace InterfacesAndAbstractClasses
 {
     abstract class Figure
     {
@@ -53,6 +53,11 @@ namespace InterfaceAndAbsractClass
         public abstract int NumberOfSides { get; }
         public abstract double CalculateArea();
         public abstract void CalculateSides();
+        
+        /// <summary>
+        /// Установлює координати вершин фігури.
+        /// </summary>
+        /// <param name="vertices">Масив координат вершин</param>
         public abstract void SetVertices(int[,] vertices);
         public abstract void ShowData();
     }
@@ -60,7 +65,7 @@ namespace InterfaceAndAbsractClass
 
 using System;
 
-namespace InterfaceAndAbsractClass
+namespace InterfacesAndAbstractClasses
 {
     class Triangle : Figure
     {
@@ -146,7 +151,7 @@ namespace InterfaceAndAbsractClass
 
 using System;
 
-namespace InterfaceAndAbsractClass
+namespace InterfacesAndAbstractClasses
 {
     class Quadrangle : Figure
     {
