@@ -34,11 +34,11 @@ namespace Matrix
         private int Columns { get; }
         private int[,] MatrixArray { get; }
 
-        public Matrix(int rows, int columns)
+        public Matrix(int Rows, int Rolumns)
         {
-            Rows = rows;
-            Columns = columns;
-            MatrixArray = new int[rows, columns];
+            Rows = Rows;
+            Columns = Columns;
+            MatrixArray = new int[Rows, Columns];
         }
 
         private void FillMatrix()
@@ -78,7 +78,7 @@ namespace Matrix
             }
         }
 
-        public int GetDiagonalSum()
+        private int GetDiagonalSum()
         {
             return CalculateDiagonalSum();
         }
