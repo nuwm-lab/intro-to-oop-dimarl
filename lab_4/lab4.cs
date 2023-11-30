@@ -42,9 +42,14 @@ namespace Geometry
         protected double[,] vertices;
         public int VertexCount { get; protected set; }
 
+        protected Shape()
+        {
+            // Protected constructor for Shape class
+        }
+
         public virtual void SetVertices(double[,] vertices)
         {
-            this.vertices = vertices;
+            this.vertices = vertices ?? throw new ArgumentNullException(nameof(vertices), "Vertices array cannot be null.");
         }
 
         public void ShowVertices()
@@ -52,25 +57,36 @@ namespace Geometry
             if (vertices == null)
             {
                 Console.WriteLine("Coordinates not set!");
+                return;
             }
-            else
+
+            Console.WriteLine("-----------------------------");
+            for (int i = 0; i < VertexCount; i++)
             {
-                Console.WriteLine("-----------------------------");
-                for (int i = 0; i < VertexCount; i++)
-                {
-                    Console.WriteLine($"Vertex {i + 1}: x = {vertices[i, 0]}, y = {vertices[i, 1]}");
-                }
-                Console.WriteLine("-----------------------------");
+                Console.WriteLine($"Vertex {i + 1}: x = {vertices[i, 0]}, y = {vertices[i, 1]}");
             }
+            Console.WriteLine("-----------------------------");
         }
 
         public virtual void CalculateSides()
         {
+            if (vertices == null)
+            {
+                Console.WriteLine("Coordinates not set!");
+                return;
+            }
+
             // To be implemented in child classes
         }
 
         public virtual double CalculateArea()
         {
+            if (vertices == null)
+            {
+                Console.WriteLine("Coordinates not set!");
+                return 0;
+            }
+
             // To be implemented in child classes
             return 0;
         }
@@ -85,11 +101,23 @@ namespace Geometry
 
         public override void CalculateSides()
         {
+            if (vertices == null)
+            {
+                Console.WriteLine("Coordinates not set!");
+                return;
+            }
+
             // Implementation for calculating sides of a triangle
         }
 
         public override double CalculateArea()
         {
+            if (vertices == null)
+            {
+                Console.WriteLine("Coordinates not set!");
+                return 0;
+            }
+
             // Implementation for calculating area of a triangle
             return 0;
         }
@@ -104,11 +132,23 @@ namespace Geometry
 
         public override void CalculateSides()
         {
+            if (vertices == null)
+            {
+                Console.WriteLine("Coordinates not set!");
+                return;
+            }
+
             // Implementation for calculating sides of a quadrangle
         }
 
         public override double CalculateArea()
         {
+            if (vertices == null)
+            {
+                Console.WriteLine("Coordinates not set!");
+                return 0;
+            }
+
             // Implementation for calculating area of a quadrangle
             return 0;
         }
