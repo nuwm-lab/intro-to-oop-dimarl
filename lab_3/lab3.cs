@@ -25,15 +25,18 @@ namespace ArrayMatrix
         }
 
         /// <summary>
+        /// Destructor for Matrix class.
+        /// </summary>
+        ~Matrix()
+        {
+            Console.WriteLine("Memory cleaning...");
+        }
+
+        /// <summary>
         /// Fills the matrix with random values.
         /// </summary>
         public void FillMatrix()
         {
-            if (matrixArray == null)
-            {
-                matrixArray = new int[numberOfRows, numberOfColumns];
-            }
-
             for (int i = 0; i < numberOfRows; i++)
             {
                 for (int j = 0; j < numberOfColumns; j++)
