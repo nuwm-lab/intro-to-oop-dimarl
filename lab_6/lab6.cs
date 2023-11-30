@@ -43,8 +43,6 @@ namespace InterfacesAndAbstractClasses
     }
 }
 
-using System;
-
 namespace InterfacesAndAbstractClasses
 {
     abstract class Figure
@@ -62,8 +60,6 @@ namespace InterfacesAndAbstractClasses
         public abstract void ShowData();
     }
 }
-
-using System;
 
 namespace InterfacesAndAbstractClasses
 {
@@ -148,8 +144,6 @@ namespace InterfacesAndAbstractClasses
         }
     }
 }
-
-using System;
 
 namespace InterfacesAndAbstractClasses
 {
